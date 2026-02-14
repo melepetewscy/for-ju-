@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -9,7 +10,9 @@
 body {
     margin: 0;
     overflow: hidden;
-    background: radial-gradient(circle, #1a001f, #000);
+    background: linear-gradient(135deg, #ff9acb, #ff6fa5, #ffb6d9);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
     height: 100vh;
     font-family: Arial, sans-serif;
     color: white;
@@ -19,6 +22,12 @@ body {
     text-align: center;
 }
 
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 /* SERCE */
 #heart {
     font-size: 120px;
@@ -26,6 +35,12 @@ body {
     animation: pulse 1.5s infinite;
     z-index: 10;
     position: relative;
+    transition: all 0.8s ease;
+}
+
+.small {
+    transform: scale(0.6);
+    opacity: 0.7;
 }
 
 @keyframes pulse {
@@ -42,8 +57,7 @@ body {
     opacity: 0;
     transform: scale(0.5);
     transition: all 1.5s ease;
-    text-shadow: 0 0 20px #ff4da6, 0 0 40px #ff4da6;
-    z-index: 5;
+    text-shadow: 0 0 20px white, 0 0 40px #ff4da6;
 }
 
 /* PODPOWIEDŹ */
@@ -75,7 +89,6 @@ body {
 /* SPADAJĄCE SERDUSZKA */
 .falling-heart {
     position: absolute;
-    color: pink;
     animation: fall linear forwards;
 }
 
@@ -116,13 +129,13 @@ const secret = document.getElementById("secret");
 heart.addEventListener("click", function() {
 
     if(stage === 0){
-        heart.style.display = "none";
         message.classList.add("show");
+        heart.classList.add("small");
         createExplosion();
 
         setTimeout(() => {
             hint.style.opacity = 1;
-        }, 2500);
+        }, 2000);
 
         stage = 1;
     }
@@ -130,6 +143,7 @@ heart.addEventListener("click", function() {
     else if(stage === 1){
         message.style.display = "none";
         hint.style.display = "none";
+        heart.style.display = "none";
         secret.classList.add("show");
         stage = 2;
     }
@@ -168,7 +182,7 @@ function createFallingHearts() {
     setTimeout(() => el.remove(), 5000);
 }
 
-setInterval(createFallingHearts, 300);
+setInterval(createFallingHearts, 400);
 </script>
 
 </body>
