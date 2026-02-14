@@ -19,6 +19,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    position: relative;
 }
 
 @keyframes gradientMove {
@@ -33,13 +34,14 @@ body {
     cursor: pointer;
     animation: pulse 1.5s infinite;
     z-index: 10;
-    position: relative;
-    transition: all 0.8s ease;
+    position: absolute;
+    transition: all 1s ease;
 }
 
-.small {
-    transform: scale(0.6);
-    opacity: 0.7;
+/* po pierwszym kliknięciu */
+.move {
+    bottom: 40px;
+    font-size: 60px;
 }
 
 @keyframes pulse {
@@ -51,7 +53,7 @@ body {
 /* KOCHAM CIE */
 #message {
     position: absolute;
-    font-size: 70px;
+    font-size: 80px;
     font-weight: bold;
     opacity: 0;
     transform: scale(0.5);
@@ -62,7 +64,7 @@ body {
 /* PODPOWIEDŹ */
 #hint {
     position: absolute;
-    bottom: 40px;
+    bottom: 120px;
     font-size: 18px;
     opacity: 0;
     transition: opacity 2s ease;
@@ -71,13 +73,12 @@ body {
 /* UKRYTA WIADOMOŚĆ */
 #secret {
     position: absolute;
-    max-width: 700px;
-    font-size: 22px;
-    line-height: 1.6;
+    font-size: 50px;
+    font-weight: bold;
     opacity: 0;
     transform: scale(0.8);
     transition: all 2s ease;
-    padding: 20px;
+    text-shadow: 0 0 20px white, 0 0 40px #ff4da6;
 }
 
 .show {
@@ -106,16 +107,7 @@ body {
 
 <div id="hint">Kliknij jeszcze raz ❤️</div>
 
-<div id="secret">
-Bardzo dziękuję, że jesteś. <br><br>
-Że pojawiłeś się w moim życiu. <br><br>
-Ono bardzo się zmieniło dzięki Tobie. <br>
-Jest lepsze. <br>
-Jestem dzięki Tobie naprawdę szczęśliwa. <br><br>
-I już od bardzo dawna nasze „uwielbiam Cię” <br>
-znaczyło dokładnie to samo, co… <br><br>
-<b>Kocham Cię ❤️</b>
-</div>
+<div id="secret">Dziękuję, że jesteś &lt;3</div>
 
 <script>
 let stage = 0;
@@ -125,11 +117,18 @@ const message = document.getElementById("message");
 const hint = document.getElementById("hint");
 const secret = document.getElementById("secret");
 
+heart.style.top = "50%";
+heart.style.left = "50%";
+heart.style.transform = "translate(-50%, -50%)";
+
 heart.addEventListener("click", function() {
 
     if(stage === 0){
         message.classList.add("show");
-        heart.classList.add("small");
+        heart.classList.add("move");
+        heart.style.top = "auto";
+        heart.style.left = "50%";
+        heart.style.transform = "translateX(-50%)";
         createExplosion();
 
         setTimeout(() => {
