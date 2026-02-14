@@ -3,59 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dla Ciebie ❤️</title>
+<title>Prezent for ju ❤️</title>
 
 <style>
 body {
     margin: 0;
     overflow: hidden;
     background: radial-gradient(circle, #1a001f, #000);
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    font-family: 'Arial', sans-serif;
-    color: white;
     text-align: center;
 }
 
+/* SERCE */
 #heart {
     font-size: 120px;
     cursor: pointer;
     animation: pulse 1.5s infinite;
+    z-index: 10;
+    position: relative;
 }
 
 @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    50% { transform: scale(1.15); }
     100% { transform: scale(1); }
 }
 
+/* KOCHAM CIE */
 #message {
     position: absolute;
-    font-size: 80px;
+    font-size: 70px;
     font-weight: bold;
     opacity: 0;
-    text-shadow: 0 0 20px #ff4da6, 0 0 40px #ff4da6;
+    transform: scale(0.5);
     transition: all 1.5s ease;
+    text-shadow: 0 0 20px #ff4da6, 0 0 40px #ff4da6;
+    z-index: 5;
 }
 
+/* PODPOWIEDŹ */
 #hint {
     position: absolute;
-    bottom: 50px;
+    bottom: 40px;
     font-size: 18px;
     opacity: 0;
     transition: opacity 2s ease;
 }
 
+/* UKRYTA WIADOMOŚĆ */
 #secret {
     position: absolute;
     max-width: 700px;
-    font-size: 24px;
+    font-size: 22px;
     line-height: 1.6;
     opacity: 0;
     transform: scale(0.8);
     transition: all 2s ease;
+    padding: 20px;
 }
 
 .show {
@@ -63,10 +72,11 @@ body {
     transform: scale(1) !important;
 }
 
+/* SPADAJĄCE SERDUSZKA */
 .falling-heart {
     position: absolute;
     color: pink;
-    animation: fall linear infinite;
+    animation: fall linear forwards;
 }
 
 @keyframes fall {
@@ -79,7 +89,9 @@ body {
 <body>
 
 <div id="heart">❤️</div>
+
 <div id="message">Kocham Cię</div>
+
 <div id="hint">Kliknij jeszcze raz ❤️</div>
 
 <div id="secret">
@@ -94,29 +106,30 @@ znaczyło dokładnie to samo, co… <br><br>
 </div>
 
 <script>
+let stage = 0;
+
 const heart = document.getElementById("heart");
 const message = document.getElementById("message");
 const hint = document.getElementById("hint");
 const secret = document.getElementById("secret");
 
-let stage = 0;
-
-heart.addEventListener("click", () => {
+heart.addEventListener("click", function() {
 
     if(stage === 0){
         heart.style.display = "none";
         message.classList.add("show");
         createExplosion();
-        
+
         setTimeout(() => {
             hint.style.opacity = 1;
         }, 2500);
 
         stage = 1;
     }
+
     else if(stage === 1){
-        hint.style.display = "none";
         message.style.display = "none";
+        hint.style.display = "none";
         secret.classList.add("show");
         stage = 2;
     }
@@ -144,16 +157,15 @@ function createExplosion() {
 }
 
 function createFallingHearts() {
-    const heart = document.createElement("div");
-    heart.classList.add("falling-heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.fontSize = Math.random() * 20 + 10 + "px";
-    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+    const el = document.createElement("div");
+    el.classList.add("falling-heart");
+    el.innerHTML = "❤️";
+    el.style.left = Math.random() * window.innerWidth + "px";
+    el.style.fontSize = Math.random() * 20 + 10 + "px";
+    el.style.animationDuration = Math.random() * 3 + 2 + "s";
+    document.body.appendChild(el);
 
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 5000);
+    setTimeout(() => el.remove(), 5000);
 }
 
 setInterval(createFallingHearts, 300);
